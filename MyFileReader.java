@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Writer;
 
 
 public class MyFileReader {
@@ -86,10 +87,64 @@ public class MyFileReader {
 	    return returnValue;
 	}
 	
+	private String printLine(int lineNumber1, int lineNumber2, String outfName) {
+		// TODO Auto-generated method stub
+				String returnValue = "";
+			    FileReader file = null;
+				FileWriter outfile=null;
+			    String line = "";
+			    int currentLineNumber=0;
+			    
+			    try {
+			      file = new FileReader(this.fName);
+			      outfile=new FileWriter(outfName);
+			      BufferedReader reader = new BufferedReader(file);
+			      BufferedWriter writer = new BufferedWriter(outfile);
+			      
+			      while ((line = reader.readLine()) != null) {
+			    	currentLineNumber++; 
+			    	System.out.println(line);
+			    	if(currentLineNumber==lineNumber1 || currentLineNumber==lineNumber2)
+			           returnValue += line+"\n";
+			      }
+			      
+			      reader.close();
+			      writer.write(returnValue);
+			      writer.close();
+			      
+			    } catch (FileNotFoundException e) {
+			      throw new RuntimeException("File not found");
+			    } catch (IOException e) {
+			      throw new RuntimeException("IO Error occured");
+			    } finally {
+			      if (file != null) {
+			        try {
+			          file.close();
+			        } catch (IOException e) {
+			          e.printStackTrace();
+			        }
+			      }
+			    }
+			    return returnValue;
+		
+	}
 	public void main(String[] args) throws IOException{
 		int lineNumber1=0,lineNumber2=0;
-		String lines="",fName="";
+		boolean outFlag=false;
+		String lines="",fName="",outfName="";
 		
+		if(args.length==4){
+			outFlag=true;
+			fName=args[0];
+			outfName=args[3];
+			try {
+		        lineNumber1 = Integer.parseInt(args[1]);
+		        lineNumber2 = Integer.parseInt(args[2]);
+		    } catch (NumberFormatException e) {
+		        System.err.println("Argument" + " must be an integer");
+		        System.exit(1);
+		    }
+		}
 		if (args.length == 3) {
 			fName=args[0];
 			try {
@@ -154,13 +209,21 @@ public class MyFileReader {
 		
 		
 		MyFileReader myFileReader=new MyFileReader(fName);
-		if(lineNumber1==-1)
-			lines=myFileReader.printLine(lineNumber2);
-		if(lineNumber2==-1)
-			lines=myFileReader.printLine(lineNumber1);
-		if(lineNumber1!=-1 && lineNumber2!=-1)
-			lines=myFileReader.printLine(lineNumber1, lineNumber2);
-		System.out.println("Required line(s): "+ lines);
+		if(!outFlag){
+			if(lineNumber1==-1)
+				lines=myFileReader.printLine(lineNumber2);
+			if(lineNumber2==-1)
+				lines=myFileReader.printLine(lineNumber1);
+			if(lineNumber1!=-1 && lineNumber2!=-1)
+				lines=myFileReader.printLine(lineNumber1, lineNumber2);
+			System.out.println("Required line(s): "+ lines);
 		}
+		else{
+			lines=myFileReader.printLine(lineNumber1,lineNumber2,outfName);
+			System.out.println("Required line(s): "+ lines);
+		}
+	}
+
+
 	
 }
