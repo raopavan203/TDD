@@ -2,6 +2,8 @@ package fileRead;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 public class FileReadTestv2 {
@@ -31,5 +33,23 @@ public class FileReadTestv2 {
 	public void testTwoLines() {
 		MyFileReader myFileReader=new MyFileReader("C:/Users/Pavan Rao/workspace/fileRead/src/fileRead/input.txt");
 		assertEquals("Line 1 of input.txt == Hello","Hello\nBye!\n",myFileReader.printLine(1,4));
+	}
+	
+	@Test 
+	public void testAllCommandLineArgs() throws IOException {
+		MyFileReader myFileReader=new MyFileReader();
+		myFileReader.main(new String []{"C:/Users/Pavan Rao/workspace/fileRead/src/fileRead/input.txt","1","4"});
+	}
+	
+	@Test 
+	public void testOneCommandLineArgs() throws IOException {
+		MyFileReader myFileReader=new MyFileReader();
+		myFileReader.main(new String []{"C:/Users/Pavan Rao/workspace/fileRead/src/fileRead/input.txt"});
+	}
+	
+	@Test 
+	public void testTwoCommandLineArgs() throws IOException {
+		MyFileReader myFileReader=new MyFileReader();
+		myFileReader.main(new String []{"C:/Users/Pavan Rao/workspace/fileRead/src/fileRead/input.txt","3"});
 	}
 }
