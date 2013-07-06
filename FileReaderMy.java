@@ -1,4 +1,6 @@
 package fileRead;
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -46,6 +48,4 @@ public class FileReaderMy {
 	    }
 	    return returnValue;
 	}
-
-	
 }
