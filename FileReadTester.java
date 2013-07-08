@@ -2,6 +2,7 @@ package fileRead;
 
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -18,17 +19,11 @@ public class FileReadTester {
 		MyFileReader myFileReader=new MyFileReader("C:/Users/Pavan Rao/workspace/fileRead/src/fileRead/input.txt");
 		assertEquals("Line 10 of input.txt == NULL","",myFileReader.printLine(10));
 	}
-	@Test
-	public void testFileNotFoundException() {
+	@Test (expected = FileNotFoundException.class)
+	public void testFileNotFoundException()   {
 		MyFileReader myFileReader=new MyFileReader("C:/Users/Pavan Rao/workspace/fileRead/src/fileRead/NoSuchFile.txt");
-			try{
-				 String s=myFileReader.printLine(10);
-			   }
-		    catch(Exception e){
-			     assertEquals("File not found",e.getMessage());
-			     //throw new RuntimeException("File not found");
-		       }
-		}
+		String s=myFileReader.printLine(10);
+	}
 	@Test
 	public void testTwoLines() {
 		MyFileReader myFileReader=new MyFileReader("C:/Users/Pavan Rao/workspace/fileRead/src/fileRead/input.txt");
